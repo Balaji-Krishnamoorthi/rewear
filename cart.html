@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReWear - Cart</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-header {
+      padding: 32px 24px 8px;
+      text-align: center;
+    }
+
+    .cart-header h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .cart-header p {
+      font-size: 14px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .cart-wrapper {
+      max-width: 500px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .cart-item-name {
+      font-size: 14px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    .cart-item-price {
+      font-size: 14px;
+      color: #1D9E75;
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: #888;
+      font-size: 15px;
+    }
+
+    .cart-summary {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 16px;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .checkout-btn:hover {
+      background: #1ebe5d;
+    }
+
+    .clear-btn {
+      width: 100%;
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="logo">Re<span>Wear</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="sell.html">Sell</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <a href="cart.html" class="cart-icon">🛒 <span id="cartCount">0</span></a>
+      <button class="nav-btn">Contact</button>
+    </div>
+  </nav>
+
+  <!-- Cart Header -->
+  <div class="cart-header">
+    <h1>Your Cart 🛒</h1>
+    <p>Review your items before checkout</p>
+  </div>
+
+  <!-- Cart Items -->
+  <div class="cart-wrapper">
+    <div id="cartItems"></div>
+    <div id="cartSummary"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    ReWear Coimbatore &mdash; Buy smart, dress well, save money
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('rewear-cart')) || [];
+
+    function renderCart() {
+      const itemsDiv = document.getElementById('cartItems');
+      const summaryDiv = document.getElementById('cartSummary');
+      document.getElementById('cartCount').textContent = cart.length;
+
+      if (cart.length === 0) {
+        itemsDiv.innerHTML = '<div class="cart-empty">🛒 Cart empty da!<br><br><a href="shop.html" style="color:#1D9E75;">Shop la po →</a></div>';
+        summaryDiv.innerHTML = '';
+        return;
+      }
+
+      itemsDiv.innerHTML = cart.map((item, i) => `
+        <div class="cart-item">
+          <div>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">Rs. ${item.price}</div>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${i})">Remove</button>
+        </div>
+      `).join('');
+
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+      summaryDiv.innerHTML = `
+        <div class="cart-summary">
+          <div class="cart-total">
+            <span>Total (${cart.length} items)</span>
+            <span>Rs. ${total}</span>
+          </div>
+          <button class="checkout-btn" onclick="checkout()">📲 Checkout via WhatsApp</button>
+          <button class="clear-btn" onclick="clearCart()">🗑️ Clear Cart</button>
+        </div>
+      `;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('rewear-cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      localStorage.setItem('rewear-cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function checkout() {
+      if (cart.length === 0) return;
+      const itemList = cart.map(i => `- ${i.name}: Rs.${i.price}`).join('\n');
+      const total = cart.reduce((sum, i) => sum + i.price, 0);
+      const msg = `Hi ReWear! I want to order:\n\n${itemList}\n\nTotal: Rs.${total}`;
+      const url = `https://wa.me/916374521657?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    renderCart();
+  </script>
+
+</body>
+
+</html>

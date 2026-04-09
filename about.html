@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReWear - About Us</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="about.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="logo">Re<span>Wear</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="sell.html">Sell</a>
+      <a href="about.html">About</a>
+    </div>
+    <button class="nav-btn">Contact</button>
+  </nav>
+
+  <!-- Hero -->
+  <div class="about-hero">
+    <div class="about-tag">Our Story</div>
+    <h1>We're on a mission to make <span>fashion affordable</span></h1>
+    <p>ReWear started in Coimbatore with one simple idea — good clothes shouldn't go to waste.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Items Listed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">150+</div>
+      <div class="stat-label">Happy Buyers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">Avg. Savings</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Sellers</div>
+    </div>
+  </div>
+
+  <!-- Why ReWear -->
+  <div class="why-section">
+    <div class="why-title">Why ReWear?</div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">💸</div>
+        <div class="why-name">Save Money</div>
+        <div class="why-text">Get branded clothes at 70-80% less than original price.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌱</div>
+        <div class="why-name">Eco Friendly</div>
+        <div class="why-text">Every reused cloth saves water, energy and reduces waste.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🤝</div>
+        <div class="why-name">Local Community</div>
+        <div class="why-text">Buy and sell within Coimbatore — support local people.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✅</div>
+        <div class="why-name">Quality Checked</div>
+        <div class="why-text">Every item is reviewed before listing — no junk!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Our Story -->
+  <div class="story-section">
+    <div class="story-card">
+      <div class="city-badge">🏡 நம்ம கோவை</div>
+      <div class="story-title">How it started 👟</div>
+      <p>It started with a cupboard full of clothes that no longer fit — but were too good to throw away. We thought,
+        why not help others in Coimbatore find these gems at affordable prices?</p>
+      <br>
+      <p>ReWear is built for students, working professionals, and anyone who loves fashion but hates overpaying. We
+        connect sellers with buyers — simple, fast, and free.</p>
+      <br>
+      <p>🌿 Every purchase on ReWear is a small step towards a more sustainable future.</p>
+    </div>
+  </div>
+
+  <!-- Contact CTA -->
+  <div class="contact-section">
+    <h2>Have questions? We're on WhatsApp! 💬</h2>
+    <p>Message us anytime — we reply fast!</p>
+    <button class="whatsapp-btn" onclick="openWhatsApp()">Chat with us</button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    ReWear Coimbatore &mdash; Buy smart, dress well, save money
+  </div>
+
+  <script>
+    function openWhatsApp() {
+      const msg = "Hi ReWear! I have a question.";
+      const url = `https://wa.me/916374521657?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+
+</html>

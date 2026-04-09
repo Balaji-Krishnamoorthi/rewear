@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReWear - Shop</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="shop.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="logo">Re<span>Wear</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="sell.html">Sell</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <a href="cart.html" class="cart-icon">🛒 <span id="cartCount">0</span></a>
+      <button class="nav-btn">Contact</button>
+    </div>
+  </nav>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+    <button class="filter-btn" onclick="filterProducts('dress')">Dress</button>
+    <button class="filter-btn" onclick="filterProducts('tops')">Tops</button>
+    <button class="filter-btn" onclick="filterProducts('jacket')">Jacket</button>
+  </div>
+
+  <!-- Loading -->
+  <div id="loadingMsg" style="text-align:center; padding:40px; color:#888; font-size:15px;">
+    Loading items... ⏳
+  </div>
+
+  <!-- Shop Grid -->
+  <div class="shop-grid" id="shopGrid"></div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">✅ Added to cart!</div>
+
+  <!-- Footer -->
+  <div class="footer">
+    ReWear Coimbatore &mdash; Buy smart, dress well, save money
+  </div>
+
+  <script>
+    const SHEET_ID = '1kXrZ9J0sdK6Oe9xOzZ6CPGWxJnxc8rJDwD7AEHmaA9M';
+    const API_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+    let allProducts = [];
+    let cart = JSON.parse(localStorage.getItem('rewear-cart')) || [];
+
+    // Update cart count
+    function updateCartCount() {
+      document.getElementById('cartCount').textContent = cart.length;
+    }
+
+    // Load from Google Sheets
+    async function loadProducts() {
+      try {
+        const res = await fetch(API_URL);
+        const text = await res.text();
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+
+        allProducts = rows.map(row => ({
+          name: row.c[0]?.v || 'Unknown',
+          price: row.c[1]?.v || 0,
+          category: row.c[2]?.v || 'other',
+          image: row.c[3]?.v || '👗',
+          size: row.c[4]?.v || 'M',
+          condition: row.c[5]?.v || 'Good'
+        }));
+
+        document.getElementById('loadingMsg').style.display = 'none';
+        renderProducts(allProducts);
+      } catch (e) {
+        document.getElementById('loadingMsg').textContent = '❌ Items load aagala, refresh try pannu!';
+        console.error(e);
+      }
+    }
+
+    // Render products
+    function renderProducts(products) {
+      const grid = document.getElementById('shopGrid');
+      if (products.length === 0) {
+        grid.innerHTML = '<p style="text-align:center;color:#888;padding:40px;">No items found da!</p>';
+        return;
+      }
+
+      grid.innerHTML = products.map((item, i) => `
+        <div class="shop-card">
+          <div class="shop-img">
+            ${item.image.startsWith('http')
+          ? `<img src="${item.image}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;">`
+          : `<span style="font-size:48px;">${item.image}</span>`
+        }
+          </div>
+          <div class="shop-info">
+            <div class="shop-name">${item.name}</div>
+            <div class="shop-meta">Size: ${item.size} &bull; ${item.condition}</div>
+            <div class="shop-price">Rs. ${item.price}</div>
+            <button class="add-cart-btn" onclick="addToCart(${i})">Add to Cart 🛒</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Filter
+    function filterProducts(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (category === 'all') {
+        renderProducts(allProducts);
+      } else {
+        renderProducts(allProducts.filter(p => p.category === category));
+      }
+    }
+
+    // Add to cart
+    function addToCart(index) {
+      const item = allProducts[index];
+      cart.push({ name: item.name, price: item.price });
+      localStorage.setItem('rewear-cart', JSON.stringify(cart));
+      updateCartCount();
+      showToast();
+    }
+
+    // Toast
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // Init
+    updateCartCount();
+    loadProducts();
+  </script>
+
+</body>
+
+</html>

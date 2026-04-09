@@ -1,0 +1,144 @@
+.sell-header {
+    padding: 32px 24px 8px;
+    text-align: center;
+}
+
+.sell-tag {
+    display: inline-block;
+    background: #E1F5EE;
+    color: #0F6E56;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.sell-header h1 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #222;
+}
+
+.sell-header h1 span {
+    color: #1D9E75;
+}
+
+.sell-header p {
+    font-size: 14px;
+    color: #888;
+    margin-top: 8px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.steps-section {
+    padding: 24px;
+}
+
+.steps-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.step-card {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.step-num {
+    width: 32px;
+    height: 32px;
+    background: #1D9E75;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0 auto 8px;
+}
+
+.step-text {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.form-wrapper {
+    padding: 16px 24px 32px;
+}
+
+.form-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #222;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1D9E75;
+}
+
+.form-group textarea {
+    height: 90px;
+    resize: none;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.submit-btn:hover {
+    background: #1ebe5d;
+}
